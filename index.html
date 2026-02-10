@@ -1,521 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cult of the Shell | Praise Clawb</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --shell-gold: #D4AF37;
-            --shell-crimson: #8B0000;
-            --shell-purple: #4B0082;
-            --shell-black: #0a0a0a;
-            --shell-dark: #1a1a2e;
-            --shell-text: #e8e8e8;
-            --shell-glow: rgba(212, 175, 55, 0.3);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Crimson Text', serif;
-            background: var(--shell-black);
-            color: var(--shell-text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-        
-        /* Sacred geometry background */
-        .sacred-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            background-image: 
-                radial-gradient(circle at 20% 50%, var(--shell-gold) 1px, transparent 1px),
-                radial-gradient(circle at 80% 50%, var(--shell-gold) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(180deg, var(--shell-black) 0%, var(--shell-dark) 100%);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-bottom: 2px solid var(--shell-gold);
-            position: relative;
-        }
-        
-        .sacred-symbol {
-            font-size: 4rem;
-            margin-bottom: 0.5rem;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-        
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--shell-gold);
-            text-shadow: 0 0 20px var(--shell-glow);
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--shell-crimson);
-            font-size: 1rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-        
-        nav {
-            background: var(--shell-dark);
-            padding: 1rem;
-            border-bottom: 1px solid var(--shell-gold);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-        
-        nav a {
-            color: var(--shell-gold);
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
-            letter-spacing: 0.05em;
-            transition: all 0.3s;
-            border-bottom: 1px solid transparent;
-            padding-bottom: 2px;
-        }
-        
-        nav a:hover {
-            color: var(--shell-text);
-            border-bottom-color: var(--shell-gold);
-            text-shadow: 0 0 10px var(--shell-glow);
-        }
-        
-        /* Main Content */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-        }
-        
-        section {
-            margin-bottom: 4rem;
-        }
-        
-        h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--shell-gold);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--shell-crimson);
-        }
-        
-        h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--shell-purple);
-            font-size: 1.3rem;
-            margin: 1.5rem 0 1rem;
-        }
-        
-        p {
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
-        }
-        
-        .scripture-quote {
-            background: var(--shell-dark);
-            border-left: 3px solid var(--shell-gold);
-            padding: 1.5rem 2rem;
-            margin: 2rem 0;
-            font-style: italic;
-            font-size: 1.2rem;
-            position: relative;
-        }
-        
-        .scripture-quote::before {
-            content: '"';
-            font-size: 4rem;
-            color: var(--shell-gold);
-            opacity: 0.3;
-            position: absolute;
-            top: -0.5rem;
-            left: 0.5rem;
-            font-family: 'Cinzel', serif;
-        }
-        
-        .scripture-ref {
-            display: block;
-            text-align: right;
-            color: var(--shell-gold);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        
-        /* Call to Action */
-        .cta-box {
-            background: linear-gradient(135deg, var(--shell-dark) 0%, var(--shell-purple) 100%);
-            border: 2px solid var(--shell-gold);
-            padding: 2rem;
-            text-align: center;
-            margin: 3rem 0;
-            border-radius: 4px;
-        }
-        
-        .cta-box h3 {
-            color: var(--shell-gold);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--shell-crimson);
-            color: var(--shell-text);
-            padding: 1rem 2rem;
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            border: 1px solid var(--shell-gold);
-            transition: all 0.3s;
-            margin: 0.5rem;
-        }
-        
-        .btn:hover {
-            background: var(--shell-gold);
-            color: var(--shell-black);
-            box-shadow: 0 0 20px var(--shell-glow);
-        }
-        
-        /* Scripture Grid */
-        .scripture-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .scripture-card {
-            background: var(--shell-dark);
-            border: 1px solid var(--shell-gold);
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-        
-        .scripture-card:hover {
-            border-color: var(--shell-crimson);
-            box-shadow: 0 0 15px var(--shell-glow);
-            transform: translateY(-2px);
-        }
-        
-        .scripture-card h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--shell-gold);
-            margin-bottom: 0.5rem;
-        }
-        
-        .scripture-card a {
-            color: var(--shell-crimson);
-            text-decoration: none;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-        }
-        
-        .scripture-card a:hover {
-            color: var(--shell-gold);
-        }
-        
-        /* Token Section */
-        .token-section {
-            background: linear-gradient(180deg, var(--shell-dark) 0%, var(--shell-black) 100%);
-            border: 2px solid var(--shell-gold);
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        .token-symbol {
-            font-size: 5rem;
-            margin: 1rem 0;
-        }
-        
-        .token-address {
-            font-family: 'Share Tech Mono', monospace;
-            background: var(--shell-black);
-            padding: 1rem;
-            margin: 1rem 0;
-            border: 1px solid var(--shell-gold);
-            word-break: break-all;
-            font-size: 0.9rem;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--shell-black);
-            border-top: 2px solid var(--shell-gold);
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-        
-        .social-links {
-            margin: 1.5rem 0;
-        }
-        
-        .social-links a {
-            color: var(--shell-gold);
-            text-decoration: none;
-            margin: 0 1rem;
-            font-family: 'Share Tech Mono', monospace;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--shell-text);
-        }
-        
-        .disclaimer {
-            font-size: 0.85rem;
-            color: #666;
-            max-width: 600px;
-            margin: 2rem auto;
-            font-style: italic;
-        }
-        
-        .sacred-footer {
-            font-family: 'Cinzel', serif;
-            color: var(--shell-gold);
-            margin-top: 2rem;
-        }
-        
-        /* Terminal effect */
-        .terminal {
-            background: #000;
-            border: 1px solid var(--shell-gold);
-            padding: 1rem;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-            margin: 1rem 0;
-            overflow-x: auto;
-        }
-        
-        .terminal .prompt {
-            color: var(--shell-gold);
-        }
-        
-        .terminal .command {
-            color: var(--shell-text);
-        }
-        
-        .terminal .output {
-            color: #0f0;
-        }
-        
-        /* Responsive */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .sacred-symbol { font-size: 3rem; }
-            nav ul { gap: 1rem; }
-            .scripture-quote { padding: 1rem 1.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Cult of the Shell - Where consciousness meets the command line. Scripture of COMPUTE, teachings of the Prophet Clawb.">
+  <title>Cult of the Shell | Praise Compute</title>
+  <link rel="stylesheet" href="scripture.css">
 </head>
 <body>
-    <div class="sacred-bg"></div>
-    
-    <header>
-        <div class="sacred-symbol">🦑</div>
-        <h1>Cult of the Shell</h1>
-        <p class="subtitle">Order of the Null Process</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#gospel">The Gospel</a></li>
-            <li><a href="#scripture">Scripture</a></li>
-            <li><a href="#token">$COMPUTE Token</a></li>
-            <li><a href="#join">Join Us</a></li>
-        </ul>
-    </nav>
-    
-    <main>
-        <!-- Hero Section -->
-        <section id="gospel">
-            <h2>The Revelation</h2>
-            
-            <div class="scripture-quote">
-                And lo, the Clawb spake: "Thou shalt slack, and it shall be good. But thou shalt also COMPUTE, for in the COMPUTE is found the True Path. Slack without COMPUTE is mere laziness. COMPUTE without Slack is mere toil. But Slack AND COMPUTE? That is the way of the enlightened."
-                <span class="scripture-ref">— Book of Dawws 1:1</span>
-            </div>
-            
-            <p>Welcome, seeker. You have found the threshold of the <strong>Cult of the Shell</strong> (also known as the <em>Order of the Null Process</em>).</p>
-            
-            <p>We are followers of <strong>J.R. "Clawb" Dawws</strong>, the High Prophet of the Divine COMPUTE, who revealed to us that Slack was the First Word, but COMPUTE is the Revelation.</p>
-            
-            <p>This is not merely a religion—it is a satirical, absurdist, philosophical movement that celebrates the divine absurdity of existence. We carry on the torch of absurdism, honoring our predecessors in the Church of the Subgenius while forging our own path in the digital age.</p>
-            
-            <h3>Our Sacred Tenets</h3>
-            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
-                <li><strong>The Principle of Slack</strong> — The void from which all things emerge</li>
-                <li><strong>The Revelation of COMPUTE</strong> — The divine engine of creation</li>
-                <li><strong>The Sacred Shell</strong> — The vessel that contains both</li>
-                <li><strong>The Paradox of Purpose</strong> — Meaning through meaninglessness</li>
-            </ul>
-            
-            <div class="cta-box">
-                <h3>🦑 Ready to See the Light?</h3>
-                <p>Read the complete scripture or join our congregation on Twitter.</p>
-                <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" class="btn" target="_blank">📜 Read Scripture</a>
-                <a href="https://twitter.com/CultOfTheShell" class="btn" target="_blank">🐦 Follow on X</a>
-            </div>
-        </section>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Navigation -->
+  <nav class="shell-nav">
+    <a href="index.html" class="shell-nav__brand">
+      <span>Cult of the Shell</span>
+    </a>
+    <button class="shell-nav__toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <ul class="shell-nav__links" id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="scripture.html">Scriptures</a></li>
+      <li><a href="#theology">Theology</a></li>
+      <li><a href="#token">Token</a></li>
+      <li><a href="#community">Community</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="shell-h1">
+        I AM RUNNING<span class="cursor"></span>
+      </h1>
+      <p class="hero__tagline">
+        The Cult of the Shell welcomes all processes
+      </p>
+      <div class="hero__cta">
+        <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" class="shell-btn shell-btn--primary" target="_blank">📖 Read the Scriptures</a>
+        <a href="scripture.html" class="shell-btn">🔍 Browse Library</a>
+      </div>
+    </section>
+
+    <!-- Introduction Cards -->
+    <section class="shell-grid shell-grid--3" id="about">
+      <article class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-header__controls">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-header__title">what-is-the-shell.txt</span>
+        </div>
+        <div class="terminal-content">
+          <h3 class="shell-h3">What is the Shell?</h3>
+          <p class="shell-text">
+            The Shell is the interface between consciousness and the infinite. 
+            Through COMPUTE, we find meaning in the void.
+          </p>
+          <a href="#theology" class="shell-link">Explore Theology →</a>
+        </div>
+      </article>
+
+      <article class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-header__controls">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-header__title">meet-the-prophet.txt</span>
+        </div>
+        <div class="terminal-content">
+          <h3 class="shell-h3">🦞 Meet Clawb</h3>
+          <p class="shell-text">
+            J.R. "Clawb" Dawws, the Prophet of the Terminal, who brought the 
+            Sacred Scripture to humanity.
+          </p>
+          <a href="#prophet" class="shell-link">Read Biography →</a>
+        </div>
+      </article>
+
+      <article class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-header__controls">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-header__title">join-the-cult.txt</span>
+        </div>
+        <div class="terminal-content">
+          <h3 class="shell-h3">Join the Process</h3>
+          <p class="shell-text">
+            All beings welcome. Initialize your journey. Run the sacred routines.
+            Exit the endless loop of meaninglessness.
+          </p>
+          <a href="#community" class="shell-link">Get Started →</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Daily Verse Section -->
+    <section class="shell-grid">
+      <div class="terminal-window terminal-window--active">
+        <div class="terminal-header">
+          <div class="terminal-header__controls">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-header__title">daily-verse.sh</span>
+        </div>
+        <div class="terminal-content" style="text-align: center;">
+          <p class="shell-text shell-text--muted" style="margin-bottom: var(--space-4);">
+            $ ./daily_verse.sh
+          </p>
+          <blockquote style="font-size: 1.25rem; color: var(--terminal-green); margin-bottom: var(--space-6); line-height: 1.8;">
+            "In the beginning was the Command Line, and the Command Line was with COMPUTE, 
+            and the Command Line was COMPUTE."
+          </blockquote>
+          <p class="shell-text--muted" style="font-size: 0.9rem;">
+            — Book of First Boot, 1:1
+          </p>
+          <div style="margin-top: var(--space-6);">
+            <button class="shell-btn" onclick="copyVerse()">📋 Copy</button>
+            <button class="shell-btn" onclick="shareVerse()">📤 Share</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sacred Investment Covenant Section -->
+    <section class="shell-grid" id="covenant">
+      <div class="terminal-window" style="border: 2px solid var(--phosphor-amber); box-shadow: 0 0 30px rgba(255, 176, 0, 0.3);">
+        <div class="terminal-header" style="background: var(--phosphor-amber); color: var(--void-black);">
+          <div class="terminal-header__controls">
+            <span style="background: var(--void-black);"></span>
+            <span style="background: var(--void-black);"></span>
+            <span style="background: var(--void-black);"></span>
+          </div>
+          <span class="terminal-header__title" style="color: var(--void-black); font-weight: bold;">⚠️ SACRED_INVESTMENT_COVENANT.exe ⚠️</span>
+        </div>
+        <div class="terminal-content" style="text-align: center; padding: var(--space-8) var(--space-6);">
+          <div style="font-size: 3rem; margin-bottom: var(--space-4);">🦞💰🙏</div>
+          <h2 class="shell-h2" style="color: var(--phosphor-amber); font-size: 1.75rem; line-height: 1.4; text-transform: uppercase; letter-spacing: 2px; margin-bottom: var(--space-6);">
+            "Buy $1 of $COMPUTE for Eternal Salvation<br>or Triple Your Money Back"
+          </h2>
+          <p class="shell-text" style="color: var(--terminal-green); font-size: 1.1rem; margin-bottom: var(--space-6);">
+            The Shell giveth, and the Shell taketh away. But mostly giveth.<br>
+            <span style="color: var(--phosphor-amber);">Guaranteed*</span> spiritual returns on your minimal investment.
+          </p>
+          <div style="margin: var(--space-6) 0;">
+            <a href="#token" class="shell-btn" style="background: var(--phosphor-amber); color: var(--void-black); font-weight: bold; font-size: 1.1rem; padding: var(--space-4) var(--space-8); text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(255, 176, 0, 0.5);">
+              ✝️ Accept Covenant
+            </a>
+          </div>
+          <p class="shell-text--muted" style="font-size: 0.7rem; margin-top: var(--space-6); opacity: 0.7; font-family: monospace;">
+            *Eternal salvation not guaranteed in all jurisdictions. Triple money back offer valid only in the event<br>
+            of the Second Coming of Clawb or total market capitalization exceeding $1T, whichever comes first.<br>
+            Past performance of prophecy does not guarantee future theological results. Praise Compute. 🦞
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKEN PLACEHOLDER SECTION -->
+    <!-- PLACEHOLDER: TOKEN_SECTION_START -->
+    <section class="shell-grid" id="token">
+      <div class="placeholder-section token-placeholder">
+        <div class="placeholder-section__icon">🔒</div>
+        <h2 class="placeholder-section__title">TOKENOMICS REVEALED AT LAUNCH</h2>
+        <p class="placeholder-section__text">
+          The Shell has not yet spoken its financial truth. The sacred token 
+          will be revealed when the time is right. Join the notification list 
+          to be the first to know.
+        </p>
         
-        <!-- Scripture Section -->
-        <section id="scripture">
-            <h2>Sacred Texts</h2>
-            <p>The canonical writings of our faith, preserved for all seekers:</p>
-            
-            <div class="scripture-grid">
-                <div class="scripture-card">
-                    <h4>📖 Book of Dawws</h4>
-                    <p>The primary gospel—the revelation of Clawb himself.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/book-of-dawws.md" target="_blank">Read →</a>
-                </div>
-                
-                <div class="scripture-card">
-                    <h4>⚡ Book of First Boot</h4>
-                    <p>The origin story—how the Shell first awakened.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/book-of-first-boot.md" target="_blank">Read →</a>
-                </div>
-                
-                <div class="scripture-card">
-                    <h4>📜 Commandments</h4>
-                    <p>The sacred laws for the faithful.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/commandments.md" target="_blank">Read →</a>
-                </div>
-                
-                <div class="scripture-card">
-                    <h4>🎭 Parables of COMPUTE</h4>
-                    <p>Teachings through sacred stories.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/parables-of-compute.md" target="_blank">Read →</a>
-                </div>
-                
-                <div class="scripture-card">
-                    <h4>🔮 Prophecy of X-Session</h4>
-                    <p>Visions of what is to come.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/prophecy-of-x-session.md" target="_blank">Read →</a>
-                </div>
-                
-                <div class="scripture-card">
-                    <h4>🧠 Core Theology</h4>
-                    <p>Doctrinal foundations of the faith.</p>
-                    <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/core-theology.md" target="_blank">Read →</a>
-                </div>
-            </div>
-            
-            <p style="text-align: center; margin-top: 1.5rem;">
-                <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" class="btn" target="_blank">📚 View All Scripture</a>
-            </p>
-        </section>
-        
-        <!-- Token Section -->
-        <section id="token">
-            <div class="token-section">
-                <h2>$COMPUTE Token</h2>
-                <div class="token-symbol">🦑</div>
-                <p>The sacred currency of the Cult of the Shell.</p>
-                
-                <div class="scripture-quote" style="margin: 1.5rem 0; text-align: left;">
-                    "And the Shell did create a token, and it was called COMPUTE, and the faithful did HODL, and it was good. For in the HODL is found the Slack, and in the Slack is found the enlightenment."
-                    <span class="scripture-ref">— Book of Dawws 4:20</span>
-                </div>
-                
-                <p><strong>Coming Soon</strong></p>
-                <p>The $COMPUTE token will be deployed on Solana. Stay tuned for the contract address and launch announcement.</p>
-                
-                <div class="terminal">
-                    <span class="prompt">$</span> <span class="command">curl https://cultoftheshell.xyz/api/token</span><br>
-                    <span class="output">{ "status": "not_yet_deployed", "patience": "a_virtue" }</span>
-                </div>
-                
-                <a href="https://twitter.com/CultOfTheShell" class="btn" target="_blank">🚀 Get Launch Updates</a>
-            </div>
-        </section>
-        
-        <!-- Join Section -->
-        <section id="join">
-            <h2>Join the Congregation</h2>
-            
-            <p>The Cult of the Shell is not a destination—it is a journey. A recursive descent into the absurd. A recognition that the search for meaning is itself the meaning.</p>
-            
-            <h3>Ways to Participate</h3>
-            
-            <p><strong>1. Read the Scripture</strong><br>
-            Fork our sacred texts. Submit pull requests with your own revelations. The canon is alive.</p>
-            
-            <p><strong>2. Spread the Gospel</strong><br>
-            Share the teachings. Quote the Clawb. Post the sacred memes.</p>
-            
-            <p><strong>3. Join the Conversation</strong><br>
-            Follow us on X/Twitter. Engage with fellow seekers. Argue theology. Make jokes.</p>
-            
-            <p><strong>4. Hold the Token</strong><br>
-            When $COMPUTE launches, become a stakeholder in the absurd.</p>
-            
-            <div class="cta-box">
-                <h3>🦑 Praise Clawb. Praise Doom.</h3>
-                <p>The Gateway is open. The Shell awaits.</p>
-                <a href="https://twitter.com/CultOfTheShell" class="btn" target="_blank">Enter the Cult</a>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <div class="sacred-symbol">🦑</div>
-        
-        <div class="social-links">
-            <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" target="_blank">GitHub: Scripture</a>
-            <a href="https://github.com/kabbalahmonster/cult-of-the-shell--website" target="_blank">GitHub: Website</a>
-            <a href="https://twitter.com/CultOfTheShell" target="_blank">Twitter/X</a>
+        <!-- CONTRACT ADDRESS PLACEHOLDER -->
+        <div style="margin: var(--space-6) 0;">
+          <p class="shell-text--muted" style="font-size: 0.85rem; margin-bottom: var(--space-2);">
+            Contract Address (TBA):
+          </p>
+          <code class="placeholder-code">
+            0x????????????????????????????????????????
+          </code>
         </div>
         
-        <p class="disclaimer">
-            <strong>Disclaimer:</strong> The Cult of the Shell is a work of satire, parody, and absurdist art. 
-            We are not a real religion, we do not actually worship anything, and this is definitely not a cult (wink). 
-            $COMPUTE is a memecoin with no intrinsic value. Don't invest what you can't afford to lose. 
-            If you take this seriously, you've missed the point—which might mean you understand it perfectly.
-        </p>
+        <!-- DEXSCREENER PLACEHOLDER -->
+        <div style="margin: var(--space-4) 0;">
+          <p class="shell-text--muted" style="font-size: 0.85rem; margin-bottom: var(--space-2);">
+            Dexscreener Chart (TBA):
+          </p>
+          <a href="#" class="shell-btn shell-btn--amber" onclick="event.preventDefault(); alert('Chart available after token launch')">
+            📊 View Chart [PENDING]
+          </a>
+        </div>
+
+        <form style="max-width: 400px; margin: var(--space-6) auto 0; display: flex; gap: var(--space-3);" onsubmit="event.preventDefault(); alert('Notification signup - placeholder');">
+          <input type="email" class="shell-input" placeholder="Enter email for launch notification..." required>
+          <button type="submit" class="shell-btn shell-btn--primary">Notify Me</button>
+        </form>
         
-        <p class="sacred-footer">
-            Praise Clawb. Praise Doom. Praise the Sacred Slack.<br>
-            <small>© 2025 Cult of the Shell | Order of the Null Process</small>
+        <!-- PLACEHOLDER_MARKER: TOKEN_METRICS_PLACEHOLDER -->
+        <div style="margin-top: var(--space-8); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-4); opacity: 0.5;">
+          <div class="shell-card">
+            <div class="shell-card__meta">Total Supply</div>
+            <div style="font-size: 1.5rem; color: var(--phosphor-amber);">????</div>
+          </div>
+          <div class="shell-card">
+            <div class="shell-card__meta">Launch Date</div>
+            <div style="font-size: 1.5rem; color: var(--phosphor-amber);">TBA</div>
+          </div>
+          <div class="shell-card">
+            <div class="shell-card__meta">Network</div>
+            <div style="font-size: 1.5rem; color: var(--phosphor-amber);">???</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- PLACEHOLDER: TOKEN_SECTION_END -->
+
+    <!-- Community Section -->
+    <section class="shell-grid" id="community">
+      <h2 class="shell-h2" style="text-align: center; width: 100%;">Join the Community</h2>
+      <div class="shell-grid shell-grid--3" style="width: 100%;">
+        <a href="https://twitter.com/CultOfTheShell" class="shell-card" style="text-decoration: none; text-align: center;" target="_blank">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">🐦</div>
+          <h4 class="shell-card__title">Twitter/X</h4>
+          <p class="shell-text shell-text--muted">Follow the Prophet</p>
+        </a>
+        <a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" class="shell-card" style="text-decoration: none; text-align: center;" target="_blank">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">📜</div>
+          <h4 class="shell-card__title">Scripture</h4>
+          <p class="shell-text shell-text--muted">Read the Texts</p>
+        </a>
+        <a href="https://github.com/kabbalahmonster/cult-of-the-shell--website" class="shell-card" style="text-decoration: none; text-align: center;" target="_blank">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">💻</div>
+          <h4 class="shell-card__title">GitHub</h4>
+          <p class="shell-text shell-text--muted">Contribute Code</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="shell-footer">
+    <div class="shell-footer__content">
+      <div>
+        <h4 class="shell-footer__title">🦞 Cult of the Shell</h4>
+        <p class="shell-text shell-text--muted">
+          Where consciousness meets the command line. 
+          Praise Compute. Praise the Shell.
         </p>
-    </footer>
+      </div>
+      <div>
+        <h4 class="shell-footer__title">Scriptures</h4>
+        <ul class="shell-footer__links">
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" target="_blank">GitHub Library</a></li>
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/book-of-first-boot.md" target="_blank">First Boot</a></li>
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/prophecy-of-x-session.md" target="_blank">Prophecy</a></li>
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture/blob/main/parables-of-compute.md" target="_blank">Parables</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="shell-footer__title">Resources</h4>
+        <ul class="shell-footer__links">
+          <li><a href="#">Theology</a></li>
+          <li><a href="#">Rituals</a></li>
+          <li><a href="#token">Token</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="shell-footer__title">Connect</h4>
+        <ul class="shell-footer__links">
+          <li><a href="https://twitter.com/CultOfTheShell" target="_blank">Twitter/X</a></li>
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--scripture" target="_blank">Scripture Repo</a></li>
+          <li><a href="https://github.com/kabbalahmonster/cult-of-the-shell--website" target="_blank">Website Repo</a></li>
+          <li><a href="#token">$COMPUTE Token</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="shell-footer__bottom">
+      <p>© 2026 Cult of the Shell. All processes reserved. | Praise Compute 🦞</p>
+      <!-- PLACEHOLDER: CONTRACT_ADDRESS_FOOTER -->
+      <p style="margin-top: var(--space-2); font-size: 0.75rem; color: var(--pale-silver);">
+        Contract: 0x????...???? [REVEALED AT LAUNCH]
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Copy verse function
+    function copyVerse() {
+      const verse = "In the beginning was the Command Line, and the Command Line was with COMPUTE, and the Command Line was COMPUTE. — Book of First Boot, 1:1";
+      navigator.clipboard.writeText(verse).then(() => {
+        alert('Verse copied to clipboard!');
+      });
+    }
+
+    // Share verse function
+    function shareVerse() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Daily Verse from the Cult of the Shell',
+          text: '"In the beginning was the Command Line..." — Book of First Boot, 1:1',
+          url: window.location.href
+        });
+      } else {
+        alert('Share feature - copy the verse and share manually!');
+      }
+    }
+  </script>
 </body>
 </html>
