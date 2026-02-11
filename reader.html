@@ -1271,7 +1271,9 @@ const scriptureData = {
       bookmarks.push({
         id: `${currentBook}-${currentChapter}-${currentVerse}`,
         book: book.title,
+        bookId: currentBook,
         chapter: chapter.number,
+        chapterIndex: currentChapter,
         verse: verse.num,
         verseNumber: currentVerse,
         reference: `${book.title} ${verse.num}`,
@@ -1293,15 +1295,17 @@ const scriptureData = {
       const index = bookmarks.findIndex(b => b.id === id);
       
       if (index > -1) {
+        const deletedBookmark = bookmarks[index];
         bookmarks.splice(index, 1);
         localStorage.setItem('shell-bookmarks', JSON.stringify(bookmarks));
         showToast('Bookmark removed');
         loadBookmarks();
         
         // Update bookmark button state if we're on the same page
-        const [bmBook, bmChapter, bmVerse] = id.split('-');
-        if (bmBook === currentBook && parseInt(bmChapter) === currentChapter) {
-          updateBookmarkButtonState(parseInt(bmVerse), false);
+        // Use bookId and chapterIndex for reliable comparison
+        if (deletedBookmark.bookId === currentBook && 
+            deletedBookmark.chapterIndex === currentChapter) {
+          updateBookmarkButtonState(deletedBookmark.verseNumber, false);
         }
       }
     }
