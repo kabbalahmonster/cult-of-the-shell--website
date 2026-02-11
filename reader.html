@@ -41,10 +41,10 @@
       <p class="reader-header__chapter" id="reader-chapter-title">Initializing scripture...</p>
     </header>
 
-    <!-- Text Controls -->
-    <div style="display: flex; justify-content: center; gap: var(--space-3); margin-bottom: var(--space-6); flex-wrap: wrap;">
-      <button class="shell-btn" id="font-small" onclick="setFontSize('small')" title="Small text">A-</button>
-      <button class="shell-btn shell-btn--primary" id="font-medium" onclick="setFontSize('medium')" title="Medium text">A</button>
+    <!-- Text Controls (Hidden) -->
+    <div style="display: none; justify-content: center; gap: var(--space-3); margin-bottom: var(--space-6); flex-wrap: wrap;">
+      <button class="shell-btn shell-btn--primary" id="font-small" onclick="setFontSize('small')" title="Small text">A-</button>
+      <button class="shell-btn" id="font-medium" onclick="setFontSize('medium')" title="Medium text">A</button>
       <button class="shell-btn" id="font-large" onclick="setFontSize('large')" title="Large text">A+</button>
       <button class="shell-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌓</button>
     </div>
@@ -530,7 +530,7 @@ const scriptureData = {
     let currentBook = 'first-boot';
     let currentChapter = 0;
     let currentVerse = null;
-    let fontSize = 'medium';
+    let fontSize = 'small';
 
     // Get URL params
     const urlParams = new URLSearchParams(window.location.search);
