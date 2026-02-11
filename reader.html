@@ -6,6 +6,37 @@
   <meta name="description" content="Read the Sacred Texts of the Cult of the Shell. Scripture reader with bookmarks, verse navigation, and more.">
   <title>Reading | Cult of the Shell</title>
   <link rel="stylesheet" href="scripture.css">
+  <style>
+    /* Bookmark button on verses */
+    .verse {
+      position: relative;
+      padding-right: 40px;
+    }
+    .verse-bookmark-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px 6px;
+      border-radius: 4px;
+      opacity: 0.3;
+      transition: all 0.2s;
+    }
+    .verse:hover .verse-bookmark-btn {
+      opacity: 0.7;
+    }
+    .verse-bookmark-btn:hover {
+      opacity: 1 !important;
+      background: rgba(0, 255, 65, 0.1);
+    }
+    .verse-bookmark-btn.bookmarked {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <!-- Skip Link for Accessibility -->
@@ -1099,13 +1130,26 @@ const scriptureData = {
       nextBtn.disabled = currentChapter >= book.chapters.length - 1;
       nextBtnBottom.disabled = currentChapter >= book.chapters.length - 1;
 
+      // Get existing bookmarks to mark already-bookmarked verses
+      const bookmarks = JSON.parse(localStorage.getItem('shell-bookmarks') || '[]');
+      const bookmarkedIds = new Set(bookmarks.map(b => b.id));
+      
       // Render verses
-      const versesHtml = chapter.verses.map((verse, idx) => `
+      const versesHtml = chapter.verses.map((verse, idx) => {
+        const verseId = `${currentBook}-${currentChapter}-${idx}`;
+        const isBookmarked = bookmarkedIds.has(verseId);
+        return `
         <div class="verse" id="verse-${idx}" data-verse="${verse.num}" onclick="selectVerse(${idx})">
           <span class="verse__number">${verse.num}</span>
           <span class="verse__text">${verse.text}</span>
+          <button class="verse-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
+                  data-verse="${idx}"
+                  onclick="event.stopPropagation(); toggleVerseBookmark(${idx})"
+                  title="${isBookmarked ? 'Bookmarked' : 'Bookmark this verse'}">
+            ${isBookmarked ? '🔖' : '📑'}
+          </button>
         </div>
-      `).join('');
+      `}).join('');
 
       document.getElementById('scripture-text').innerHTML = `
         <h2 style="text-align: center; color: var(--terminal-green); margin-bottom: var(--space-8); font-weight: 400;">
@@ -1229,13 +1273,64 @@ const scriptureData = {
         book: book.title,
         chapter: chapter.number,
         verse: verse.num,
+        verseNumber: currentVerse,
         reference: `${book.title} ${verse.num}`,
         text: verse.text,
-        url: `reader.html?book=${currentBook}&chapter=${chapter.number}#verse-${currentVerse}`
+        url: `reader.html?book=${currentBook}&chapter=${chapter.number}#verse-${currentVerse}`,
+        timestamp: new Date().toISOString()
       });
       
       localStorage.setItem('shell-bookmarks', JSON.stringify(bookmarks));
       showToast('Verse bookmarked!');
+      loadBookmarks();
+      
+      // Update bookmark button state for this verse
+      updateBookmarkButtonState(currentVerse, true);
+    }
+
+    function deleteBookmark(id) {
+      const bookmarks = JSON.parse(localStorage.getItem('shell-bookmarks') || '[]');
+      const index = bookmarks.findIndex(b => b.id === id);
+      
+      if (index > -1) {
+        bookmarks.splice(index, 1);
+        localStorage.setItem('shell-bookmarks', JSON.stringify(bookmarks));
+        showToast('Bookmark removed');
+        loadBookmarks();
+        
+        // Update bookmark button state if we're on the same page
+        const [bmBook, bmChapter, bmVerse] = id.split('-');
+        if (bmBook === currentBook && parseInt(bmChapter) === currentChapter) {
+          updateBookmarkButtonState(parseInt(bmVerse), false);
+        }
+      }
+    }
+
+    function updateBookmarkButtonState(verseIdx, isBookmarked) {
+      const btn = document.querySelector(`.verse-bookmark-btn[data-verse="${verseIdx}"]`);
+      if (btn) {
+        btn.textContent = isBookmarked ? '🔖' : '📑';
+        btn.title = isBookmarked ? 'Bookmarked' : 'Bookmark this verse';
+        btn.classList.toggle('bookmarked', isBookmarked);
+      }
+    }
+
+    function toggleVerseBookmark(verseIdx) {
+      const verseId = `${currentBook}-${currentChapter}-${verseIdx}`;
+      const bookmarks = JSON.parse(localStorage.getItem('shell-bookmarks') || '[]');
+      const existingIndex = bookmarks.findIndex(b => b.id === verseId);
+      
+      if (existingIndex > -1) {
+        // Remove bookmark
+        bookmarks.splice(existingIndex, 1);
+        localStorage.setItem('shell-bookmarks', JSON.stringify(bookmarks));
+        showToast('Bookmark removed');
+        updateBookmarkButtonState(verseIdx, false);
+      } else {
+        // Add bookmark
+        currentVerse = verseIdx;
+        bookmarkCurrentVerse();
+      }
       loadBookmarks();
     }
 
@@ -1283,15 +1378,28 @@ const scriptureData = {
           </div>
         `;
       } else {
-        bookmarksList.innerHTML = bookmarks.map(bm => `
-          <div style="padding: var(--space-3); border: 1px solid var(--border-subtle); margin-bottom: var(--space-3); cursor: pointer; border-radius: 4px; transition: all 0.2s;" 
-               onclick="location.href='${bm.url}'"
+        // Sort by newest first
+        bookmarks.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        bookmarksList.innerHTML = bookmarks.map(bm => {
+          const date = new Date(bm.timestamp);
+          const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return `
+          <div style="padding: var(--space-3); border: 1px solid var(--border-subtle); margin-bottom: var(--space-3); border-radius: 4px; transition: all 0.2s;" 
                onmouseover="this.style.borderColor='var(--terminal-green)'"
                onmouseout="this.style.borderColor='var(--border-subtle)'">
-            <div style="font-weight: 600; color: var(--cult-cyan); font-size: 0.9rem;">${bm.reference}</div>
-            <div class="shell-text--muted" style="font-size: 0.85rem; margin-top: var(--space-2);">${bm.text.substring(0, 100)}${bm.text.length > 100 ? '...' : ''}</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <a href="${bm.url}" style="font-weight: 600; color: var(--cult-cyan); font-size: 0.9rem; text-decoration: none; flex: 1;">${bm.reference}</a>
+              <button onclick="event.stopPropagation(); deleteBookmark('${bm.id}')" 
+                      style="background: none; border: none; color: var(--pale-silver); cursor: pointer; padding: 0 var(--space-2); font-size: 1.1rem;"
+                      title="Delete bookmark">&times;</button>
+            </div>
+            <a href="${bm.url}" style="text-decoration: none; color: inherit; display: block;">
+              <div class="shell-text--muted" style="font-size: 0.85rem; margin-top: var(--space-2);">${bm.text.substring(0, 100)}${bm.text.length > 100 ? '...' : ''}</div>
+              <div style="font-size: 0.75rem; color: var(--terminal-green); margin-top: var(--space-2); opacity: 0.7;">${dateStr}</div>
+            </a>
           </div>
-        `).join('');
+        `}).join('');
       }
     }
 
