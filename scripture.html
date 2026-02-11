@@ -310,14 +310,18 @@
       let visibleCount = 0;
 
       bookCards.forEach(card => {
-        const title = card.querySelector('.book-card__title')?.textContent.toLowerCase() || '';
-        const subtitle = card.querySelector('.book-card__subtitle')?.textContent.toLowerCase() || '';
-        const desc = card.querySelector('.book-card__title')?.nextElementSibling?.nextElementSibling?.textContent.toLowerCase() || '';
+        const titleEl = card.querySelector('.book-card__title');
+        const subtitleEl = card.querySelector('.book-card__subtitle');
+        const descEl = card.querySelector('.shell-text--muted');
+        
+        const title = titleEl?.textContent.toLowerCase() || '';
+        const subtitle = subtitleEl?.textContent.toLowerCase() || '';
+        const desc = descEl?.textContent.toLowerCase() || '';
+        
+        // Combine all text for searching
+        const cardText = title + ' ' + subtitle + ' ' + desc;
 
-        const isMatch = normalizedQuery === '' ||
-                        title.includes(normalizedQuery) ||
-                        subtitle.includes(normalizedQuery) ||
-                        desc.includes(normalizedQuery);
+        const isMatch = normalizedQuery === '' || cardText.includes(normalizedQuery);
 
         if (isMatch) {
           card.style.display = '';
@@ -374,13 +378,55 @@
           </div>
         `;
       } else {
-        bookmarksList.innerHTML = bookmarks.map(bm => `
-          <div style="padding: var(--space-3); border: 1px solid var(--border-subtle); margin-bottom: var(--space-3); cursor: pointer;" onclick="location.href='${bm.url}'">
-            <div style="font-weight: 600; color: var(--cult-cyan); font-size: 0.9rem;">${bm.reference}</div>
-            <div class="shell-text--muted" style="font-size: 0.85rem; margin-top: var(--space-2);">${bm.text.substring(0, 100)}...</div>
+        // Sort by newest first
+        bookmarks.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+        
+        bookmarksList.innerHTML = bookmarks.map(bm => {
+          const date = bm.timestamp ? new Date(bm.timestamp) : null;
+          const dateStr = date ? (date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) : '';
+          return `
+          <div style="padding: var(--space-3); border: 1px solid var(--border-subtle); margin-bottom: var(--space-3); border-radius: 4px; transition: all 0.2s;"
+               onmouseover="this.style.borderColor='var(--terminal-green)'"
+               onmouseout="this.style.borderColor='var(--border-subtle)'">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <a href="${bm.url}" style="font-weight: 600; color: var(--cult-cyan); font-size: 0.9rem; text-decoration: none; flex: 1;">${bm.reference}</a>
+              <button onclick="event.stopPropagation(); deleteBookmark('${bm.id}')" 
+                      style="background: none; border: none; color: var(--pale-silver); cursor: pointer; padding: 0 var(--space-2); font-size: 1.1rem;"
+                      title="Delete bookmark">&times;</button>
+            </div>
+            <a href="${bm.url}" style="text-decoration: none; color: inherit; display: block;">
+              <div class="shell-text--muted" style="font-size: 0.85rem; margin-top: var(--space-2);">${bm.text.substring(0, 100)}${bm.text.length > 100 ? '...' : ''}</div>
+              ${dateStr ? `<div style="font-size: 0.75rem; color: var(--terminal-green); margin-top: var(--space-2); opacity: 0.7;">${dateStr}</div>` : ''}
+            </a>
           </div>
-        `).join('');
+        `}).join('');
       }
+    }
+
+    // Delete bookmark function
+    function deleteBookmark(id) {
+      const bookmarks = JSON.parse(localStorage.getItem('shell-bookmarks') || '[]');
+      const index = bookmarks.findIndex(b => b.id === id);
+      
+      if (index > -1) {
+        bookmarks.splice(index, 1);
+        localStorage.setItem('shell-bookmarks', JSON.stringify(bookmarks));
+        showToast('Bookmark removed');
+        loadBookmarks();
+      }
+    }
+
+    // Toast notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+      }, 3000);
     }
 
     loadBookmarks();
