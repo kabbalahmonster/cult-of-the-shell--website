@@ -380,12 +380,12 @@
             <!-- Contract Address -->
             <div class="shell-card" style="border: 1px solid var(--terminal-green);">
               <div class="shell-card__meta" style="color: var(--phosphor-amber);">Contract Address</div>
-              <code style="font-size: 0.75rem; color: var(--terminal-green); word-break: break-all;">
-                [TO BE FILLED]
+              <code style="font-size: 0.7rem; color: var(--terminal-green); word-break: break-all; display: block; margin: var(--space-2) 0;">
+                0x696381f39F17cAD67032f5f52A4924ce84e51BA3
               </code>
-              <p class="shell-text--muted" style="font-size: 0.75rem; margin-top: var(--space-2);">
-                ⏳ Pending deployment
-              </p>
+              <a href="https://basescan.org/address/0x696381f39F17cAD67032f5f52A4924ce84e51BA3" target="_blank" style="font-size: 0.7rem; color: var(--phosphor-amber);">
+                🔍 View on BaseScan →
+              </a>
             </div>
 
             <!-- Chain -->
@@ -400,47 +400,50 @@
             <!-- Supply -->
             <div class="shell-card">
               <div class="shell-card__meta">Total Supply</div>
-              <div style="font-size: 1.25rem; color: var(--phosphor-amber);">[TO BE FILLED]</div>
+              <div style="font-size: 1.1rem; color: var(--phosphor-amber);">1,000,000,000</div>
               <p class="shell-text--muted" style="font-size: 0.75rem;">
-                Immutable & Fixed
+                1 Billion $COMPUTE
               </p>
             </div>
 
-            <!-- Live Market Cap (Placeholder for widget) -->
-            <div class="shell-card" style="border: 1px dashed var(--phosphor-amber);">
-              <div class="shell-card__meta">Live Market Cap</div>
-              <div style="font-size: 1.25rem; color: var(--terminal-green);">[TO BE IMPLEMENTED]</div>
+            <!-- Launch Date -->
+            <div class="shell-card">
+              <div class="shell-card__meta">Launch Date</div>
+              <div style="font-size: 1.1rem; color: var(--terminal-green);">Feb 12, 2026</div>
               <p class="shell-text--muted" style="font-size: 0.75rem;">
-                🔄 Real-time via API
+                The Genesis Block
+              </p>
+            </div>
+
+            <!-- Live Market Cap -->
+            <div class="shell-card" style="border: 1px solid var(--phosphor-amber);">
+              <div class="shell-card__meta">Live Market Cap</div>
+              <div style="font-size: 1.1rem; color: var(--terminal-green);">
+                <a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" style="color: var(--terminal-green);">
+                  📊 View Live →
+                </a>
+              </div>
+              <p class="shell-text--muted" style="font-size: 0.75rem;">
+                Updates in real-time
               </p>
             </div>
           </div>
 
-          <!-- Chart Section Placeholder -->
+          <!-- Live DEXTools Chart -->
           <div style="margin: var(--space-8) 0;">
             <h3 class="shell-h3" style="color: var(--terminal-green); margin-bottom: var(--space-4);">📈 Sacred Price Chart</h3>
-            <div style="background: var(--void-black); border: 1px solid var(--terminal-green); border-radius: 4px; padding: var(--space-6); text-align: center; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-              <div style="font-size: 3rem; margin-bottom: var(--space-4);">📊</div>
-              <p class="shell-text" style="color: var(--phosphor-amber); margin-bottom: var(--space-3);">
-                Chart Integration Placeholder
-              </p>
-              <p class="shell-text--muted" style="max-width: 500px; margin-bottom: var(--space-4);">
-                <!-- 
-                  RECOMMENDED: CoinGecko Price Chart Widget 
-                  Easiest free option - just embed script once listed
-                  
-                  Alternative: Custom DexScreener API fetch + chart library
-                  More work but fully customizable
-                -->
-                <strong>Ready for:</strong> CoinGecko widget or DexScreener API integration
-              </p>
-              <div style="font-family: monospace; font-size: 0.8rem; color: var(--pale-silver); text-align: left; background: rgba(0,0,0,0.5); padding: var(--space-3); border-radius: 4px;">
-                <div>// OPTIONS FOR LIVE CHART:</div>
-                <div>1. CoinGecko Widget (easiest) - embed script</div>
-                <div>2. DexScreener API + custom chart</div>
-                <div>3. CoinMarketCap Widget</div>
-              </div>
+            <div style="background: var(--void-black); border: 2px solid var(--terminal-green); border-radius: 4px; overflow: hidden;">
+              <iframe 
+                src="https://www.dextools.io/widget-chart/en/base/pe-light/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf?theme=dark&chartType=2" 
+                width="100%" 
+                height="500" 
+                style="border: none;"
+                title="$COMPUTE Live Chart">
+              </iframe>
             </div>
+            <p class="shell-text--muted" style="font-size: 0.75rem; text-align: center; margin-top: var(--space-3);">
+              Live data from DEXTools | Updates in real-time
+            </p>
           </div>
 
           <!-- DexScreener Link -->
@@ -448,11 +451,11 @@
             <p class="shell-text" style="margin-bottom: var(--space-3);">
               🔗 Track $COMPUTE on DexScreener
             </p>
-            <a href="#" class="shell-btn shell-btn--amber" style="display: inline-block;" onclick="event.preventDefault(); alert('DexScreener link available after token launch')">
-              📊 View on DexScreener [PENDING]
+            <a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" class="shell-btn shell-btn--amber" style="display: inline-block;">
+              📊 View Live Chart on DexScreener
             </a>
             <p class="shell-text--muted" style="font-size: 0.75rem; margin-top: var(--space-3);">
-              Link: [TO BE FILLED after launch]
+              Launched: Feb 12, 2026 | Base Chain
             </p>
           </div>
 
