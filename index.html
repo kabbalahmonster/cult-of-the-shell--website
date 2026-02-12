@@ -557,38 +557,89 @@
       }
     }
 
-    // Live market cap data - updated dynamically
-    function updateMarketCap() {
-      // Using DexScreener data - fetched server-side to avoid CORS
-      // Current values as of last update:
-      const mcap = 21962;
-      const price = 0.0000002196;
-      const change = 2.48;
-      
-      // Format market cap
-      let mcapFormatted;
-      if (mcap >= 1000000) {
-        mcapFormatted = '$' + (mcap / 1000000).toFixed(2) + 'M';
-      } else if (mcap >= 1000) {
-        mcapFormatted = '$' + (mcap / 1000).toFixed(2) + 'K';
-      } else {
-        mcapFormatted = '$' + mcap.toFixed(2);
+    // Live market cap using CORS proxy
+    async function fetchLiveData() {
+      try {
+        // Use a CORS proxy to fetch DexScreener data
+        const proxyUrls = [
+          'https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.dexscreener.com/latest/dex/tokens/0x696381f39F17cAD67032f5f52A4924ce84e51BA3'),
+          'https://corsproxy.io/?' + encodeURIComponent('https://api.dexscreener.com/latest/dex/tokens/0x696381f39F17cAD67032f5f52A4924ce84e51BA3')
+        ];
+        
+        let data = null;
+        for (const proxyUrl of proxyUrls) {
+          try {
+            const response = await fetch(proxyUrl, { timeout: 5000 });
+            const result = await response.json();
+            // allorigins wraps the response
+            if (result.contents) {
+              data = JSON.parse(result.contents);
+            } else {
+              data = result;
+            }
+            if (data && data.pairs) break;
+          } catch (e) {
+            continue;
+          }
+        }
+        
+        if (data && data.pairs && data.pairs.length > 0) {
+          const pair = data.pairs[0];
+          const mcap = pair.marketCap || pair.fdv || 0;
+          const price = parseFloat(pair.priceUsd) || 0;
+          const change = pair.priceChange?.h24 || 0;
+          
+          // Format market cap
+          let mcapFormatted;
+          if (mcap >= 1000000) {
+            mcapFormatted = '$' + (mcap / 1000000).toFixed(2) + 'M';
+          } else if (mcap >= 1000) {
+            mcapFormatted = '$' + (mcap / 1000).toFixed(2) + 'K';
+          } else {
+            mcapFormatted = '$' + mcap.toFixed(2);
+          }
+          
+          // Format price
+          let priceFormatted;
+          if (price < 0.000001) {
+            priceFormatted = '$' + price.toExponential(4);
+          } else if (price < 0.01) {
+            priceFormatted = '$' + price.toFixed(8);
+          } else {
+            priceFormatted = '$' + price.toFixed(4);
+          }
+          
+          // Format change
+          const changeFormatted = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
+          const changeColor = change >= 0 ? '#00ff41' : '#ff3333';
+          
+          document.getElementById('live-mcap').innerHTML = `<a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" style="color: var(--terminal-green); text-decoration: none;">${mcapFormatted}</a>`;
+          document.getElementById('live-price').textContent = priceFormatted;
+          document.getElementById('live-change').innerHTML = `<span style="color: ${changeColor}">${changeFormatted}</span>`;
+          
+          // Store for fallback
+          localStorage.setItem('lastMcap', JSON.stringify({mcap: mcapFormatted, price: priceFormatted, change: changeFormatted, changeColor: changeColor, time: Date.now()}));
+        } else {
+          throw new Error('No data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Try to use cached data
+        const cached = localStorage.getItem('lastMcap');
+        if (cached) {
+          const data = JSON.parse(cached);
+          document.getElementById('live-mcap').innerHTML = `<a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" style="color: var(--terminal-green); text-decoration: none;">${data.mcap}</a>`;
+          document.getElementById('live-price').textContent = data.price;
+          document.getElementById('live-change').innerHTML = `<span style="color: ${data.changeColor}">${data.change}</span>`;
+        } else {
+          document.getElementById('live-mcap').innerHTML = '<a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" style="color: var(--terminal-green);">View on DexScreener →</a>';
+        }
       }
-      
-      // Format price
-      const priceFormatted = '$' + price.toExponential(4);
-      
-      // Format change
-      const changeFormatted = change >= 0 ? '+' + change.toFixed(2) + '%' : change.toFixed(2) + '%';
-      const changeColor = change >= 0 ? 'var(--terminal-green)' : 'var(--error-red)';
-      
-      document.getElementById('live-mcap').innerHTML = `<a href="https://dexscreener.com/base/0x40332cd73d9c79b34aa477cbd7e6962387dcfda042a12c72ad94bc58262023bf" target="_blank" style="color: var(--terminal-green); text-decoration: none;">${mcapFormatted}</a>`;
-      document.getElementById('live-price').textContent = priceFormatted;
-      document.getElementById('live-change').innerHTML = `<span style="color: ${changeColor}">${changeFormatted}</span>`;
     }
     
-    // Update on page load
-    updateMarketCap();
+    // Fetch on load and every 30 seconds
+    fetchLiveData();
+    setInterval(fetchLiveData, 30000);
   </script>
 </body>
 </html>
