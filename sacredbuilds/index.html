@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦑 Sacred Builds Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff88;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: rgba(0, 255, 136, 0.05);
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #00ff88;
+        }
+        
+        .header p {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .build-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .build-card:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .build-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .build-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .build-version {
+            background: #00ff88;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .build-meta {
+            color: #888;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+        
+        .build-meta span {
+            margin-right: 20px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+        }
+        
+        .download-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #555;
+            font-size: 0.8em;
+            border-top: 1px solid #333;
+        }
+        
+        .secret-badge {
+            display: inline-block;
+            background: #ff0066;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            margin-bottom: 15px;
+        }
+        
+        .no-builds {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .build-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="secret-badge">🔒 SECRET DOWNLOAD PORTAL</div>
+            <h1>🦑 Sacred Builds Repository</h1>
+            <p>Authorized Cult Personnel Only</p>
+        </div>
+
+        <!-- Build: DoomBitcrusher Linux -->
+        <div class="build-card">
+            <div class="build-header">
+                <span class="build-name">🎸 DoomBitcrusher</span>
+                <span class="build-version">v1.0 Linux</span>
+            </div>
+            <div class="build-meta">
+                <span>📅 July 11, 2026</span>
+                <span>📦 79 MB</span>
+                <span>🐧 Linux x64 VST3</span>
+            </div>
+            <p style="margin-bottom: 15px; color: #aaa;">
+                Pre-built Linux VST3 plugin. Ready to use — extract and copy to your VST3 folder. Includes standalone version.
+            </p>
+            <a href="/sacredbuilds/DoomBitcrusher-Linux-v1.0.tar.gz" class="download-btn" download>
+                ⬇️ Download Linux Build
+            </a>
+        </div>
+
+        <!-- Build: DoomBitcrusher Windows -->
+        <div class="build-card">
+            <div class="build-header">
+                <span class="build-name">🎸 DoomBitcrusher</span>
+                <span class="build-version">v1.0 Windows</span>
+            </div>
+            <div class="build-meta">
+                <span>📅 July 12, 2026</span>
+                <span>📦 11 KB (Source)</span>
+                <span>🪟 Windows 10/11 x64</span>
+            </div>
+            <p style="margin-bottom: 15px; color: #aaa;">
+                Windows source package with build scripts. Downloads JUCE (~200MB) during build. Includes full VS2022 setup instructions and automated install script.
+            </p>
+            <a href="/sacredbuilds/DoomBitcrusher-Windows-v1.0.tar.gz" class="download-btn" download>
+                ⬇️ Download Windows Build Package
+            </a>
+        </div>
+
+        <!-- Add more builds here as needed -->
+        <!-- Template for new builds:
+        <div class="build-card">
+            <div class="build-header">
+                <span class="build-name">📦 Build Name</span>
+                <span class="build-version">v1.0</span>
+            </div>
+            <div class="build-meta">
+                <span>📅 Date</span>
+                <span>📦 Size</span>
+                <span>🐧 Platform</span>
+            </div>
+            <p style="margin-bottom: 15px; color: #aaa;">
+                Description here.
+            </p>
+            <a href="/builds/filename.tar.gz" class="download-btn" download>
+                ⬇️ Download Build
+            </a>
+        </div>
+        -->
+
+        <div class="footer">
+            <p>🦑 Cult of the Shell — cultoftheshell.xyz</p>
+            <p style="margin-top: 10px; font-size: 0.75em;">
+                This page is not indexed or linked from the main site.<br>
+                Bookmark this URL for future access.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
