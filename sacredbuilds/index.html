@@ -164,11 +164,11 @@
             </div>
             <div class="build-meta">
                 <span>📅 July 11, 2026</span>
-                <span>📦 79 MB</span>
-                <span>🐧 Linux x64 VST3</span>
+                <span>📦 79 MB (Source + JUCE)</span>
+                <span>🐧 Linux x64</span>
             </div>
             <p style="margin-bottom: 15px; color: #aaa;">
-                Pre-built Linux VST3 plugin. Ready to use — extract and copy to your VST3 folder. Includes standalone version.
+                Source package with JUCE included. Build with CMake to create VST3 plugin + standalone app. See instructions below.
             </p>
             <a href="/sacredbuilds/DoomBitcrusher-Linux-v1.0.tar.gz" class="download-btn" download>
                 ⬇️ Download Linux Build
@@ -197,23 +197,27 @@
         <!-- Instructions Section -->
         <div class="build-card" style="border-color: #00aaff;">
             <div class="build-header">
-                <span class="build-name" style="color: #00aaff;">📖 Linux Install Instructions</span>
+                <span class="build-name" style="color: #00aaff;">📖 Linux Build Instructions</span>
             </div>
             <div style="color: #aaa; line-height: 1.6;">
-                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Quick Install</h3>
+                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Prerequisites</h3>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>CMake 3.20+</li>
+                    <li>g++ compiler</li>
+                    <li>Linux development headers</li>
+                </ul>
+
+                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Build Steps</h3>
                 <ol style="margin-left: 20px; margin-bottom: 15px;">
                     <li>Extract: <code style="background: #222; padding: 2px 6px; border-radius: 3px;">tar -xzf DoomBitcrusher-Linux-v1.0.tar.gz</code></li>
-                    <li>Copy VST3 to system folder:<br>
-                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">sudo cp -r DoomBitcrusher.vst3 ~/.vst3/</code> (user)<br>
-                        or<br>
-                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">sudo cp -r DoomBitcrusher.vst3 /usr/lib/vst3/</code> (system)
+                    <li>cd into folder, then:<br>
+                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">mkdir build && cd build</code><br>
+                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">cmake .. -DCMAKE_BUILD_TYPE=Release</code><br>
+                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">make -j$(nproc)</code>
                     </li>
-                    <li>Rescan plugins in your DAW</li>
+                    <li>Find outputs in <code style="background: #222; padding: 2px 6px; border-radius: 3px;">DoomBitcrusher_artefacts/Release/</code></li>
+                    <li>Copy <code style="background: #222; padding: 2px 6px; border-radius: 3px;">DoomBitcrusher.vst3</code> to <code style="background: #222; padding: 2px 6px; border-radius: 3px;">~/.vst3/</code></li>
                 </ol>
-
-                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Standalone Version</h3>
-                <p>Also included — run directly without a DAW:</p>
-                <code style="background: #222; padding: 4px 8px; border-radius: 3px; display: block; margin: 10px 0;">./DoomBitcrusher</code>
             </div>
         </div>
 
