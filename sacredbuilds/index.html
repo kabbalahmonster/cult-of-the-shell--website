@@ -194,6 +194,59 @@
             </a>
         </div>
 
+        <!-- Instructions Section -->
+        <div class="build-card" style="border-color: #00aaff;">
+            <div class="build-header">
+                <span class="build-name" style="color: #00aaff;">📖 Linux Install Instructions</span>
+            </div>
+            <div style="color: #aaa; line-height: 1.6;">
+                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Quick Install</h3>
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Extract: <code style="background: #222; padding: 2px 6px; border-radius: 3px;">tar -xzf DoomBitcrusher-Linux-v1.0.tar.gz</code></li>
+                    <li>Copy VST3 to system folder:<br>
+                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">sudo cp -r DoomBitcrusher.vst3 ~/.vst3/</code> (user)<br>
+                        or<br>
+                        <code style="background: #222; padding: 2px 6px; border-radius: 3px;">sudo cp -r DoomBitcrusher.vst3 /usr/lib/vst3/</code> (system)
+                    </li>
+                    <li>Rescan plugins in your DAW</li>
+                </ol>
+
+                <h3 style="color: #00aaff; margin: 15px 0 10px 0;">Standalone Version</h3>
+                <p>Also included — run directly without a DAW:</p>
+                <code style="background: #222; padding: 4px 8px; border-radius: 3px; display: block; margin: 10px 0;">./DoomBitcrusher</code>
+            </div>
+        </div>
+
+        <div class="build-card" style="border-color: #ff6b35;">
+            <div class="build-header">
+                <span class="build-name" style="color: #ff6b35;">📖 Windows Build Instructions</span>
+            </div>
+            <div style="color: #aaa; line-height: 1.6;">
+                <h3 style="color: #ff6b35; margin: 15px 0 10px 0;">Prerequisites</h3>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Visual Studio 2022</strong> (Community) — <a href="https://visualstudio.microsoft.com/vs/community/" style="color: #00ff88;">Download</a></li>
+                    <li>Workload: "Desktop development with C++"</li>
+                    <li><strong>Git for Windows</strong> — <a href="https://git-scm.com/download/win" style="color: #00ff88;">Download</a></li>
+                    <li><strong>CMake 3.20+</strong> — <a href="https://cmake.org/download/" style="color: #00ff88;">Download</a> (add to PATH)</li>
+                </ul>
+
+                <h3 style="color: #ff6b35; margin: 15px 0 10px 0;">Quick Build Steps</h3>
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Extract the package to <code style="background: #222; padding: 2px 6px; border-radius: 3px;">C:\dev\DoomBitcrusher\</code></li>
+                    <li>Initialize JUCE: <code style="background: #222; padding: 2px 6px; border-radius: 3px;">git submodule update --init --recursive</code></li>
+                    <li>Run: <code style="background: #222; padding: 2px 6px; border-radius: 3px;">build_windows.bat</code></li>
+                    <li>Install: <code style="background: #222; padding: 2px 6px; border-radius: 3px;">install_windows.bat</code> (as Admin)</li>
+                </ol>
+
+                <h3 style="color: #ff6b35; margin: 15px 0 10px 0;">Plugin Location After Install</h3>
+                <code style="background: #222; padding: 4px 8px; border-radius: 3px; display: block; margin: 10px 0;">C:\Program Files\Common Files\VST3\DoomBitcrusher.vst3\</code>
+
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                    Full instructions included in the download package as <code>WINDOWS_BUILD_INSTRUCTIONS.md</code>
+                </p>
+            </div>
+        </div>
+
         <!-- Add more builds here as needed -->
         <!-- Template for new builds:
         <div class="build-card">
